@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تبادل - منصة لبيع وتبادل وإهداء الأشياء المستعملة</title>
+    <style>
+        :root {
+            --primary-color: #2E8B57;
+            --secondary-color: #FF7F50;
+            --light-color: #F5F5F5;
+            --dark-color: #333;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo h1 {
+            color: var(--primary-color);
+            font-size: 28px;
+            margin-right: 10px;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-menu li {
+            margin-left: 20px;
+        }
+        
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-menu a:hover {
+            color: var(--primary-color);
+        }
+        
+        .auth-buttons a {
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            margin-left: 10px;
+            font-weight: 500;
+        }
+        
+        .login-btn {
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+        
+        .register-btn {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://via.placeholder.com/1200x600');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .hero h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        .search-box {
+            background: white;
+            border-radius: 50px;
+            padding: 10px;
+            max-width: 700px;
+            margin: 0 auto;
+            display: flex;
+        }
+        
+        .search-box input {
+            flex: 1;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            outline: none;
+        }
+        
+        .search-box button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+        }
+        
+        /* Categories Section */
+        .categories {
+            padding: 60px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 32px;
+            color: var(--dark-color);
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        
+        .section-title h2:after {
+            content: '';
+            position: absolute;
+            width: 70px;
+            height: 3px;
+            background: var(--primary-color);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .category-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            text-align: center;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .category-icon {
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--light-color);
+        }
+        
+        .category-icon i {
+            font-size: 40px;
+            color: var(--primary-color);
+        }
+        
+        .category-card h3 {
+            padding: 15px;
+            font-size: 18px;
+        }
+        
+        /* Items Section */
+        .featured-items {
+            padding: 60px 0;
+            background: white;
+        }
+        
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+        }
+        
+        .item-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .item-image {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .item-card:hover .item-image img {
+            transform: scale(1.05);
+        }
+        
+        .item-details {
+            padding: 15px;
+        }
+        
+        .item-details h3 {
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        
+        .item-price {
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        
+        .item-location {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        .item-type {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+        
+        .sale {
+            background: #FFE4E1;
+            color: #FF4500;
+        }
+        
+        .exchange {
+            background: #E6F7FF;
+            color: #1890FF;
+        }
+        
+        .gift {
+            background: #F6FFED;
+            color: #52C41A;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark-color);
+            color: white;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-column h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3:after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 2px;
+            background: var(--primary-color);
+            bottom: 0;
+            right: 0;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            font-size: 14px;
+            color: #aaa;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-top {
+                flex-direction: column;
+            }
+            
+            .nav-menu {
+                margin: 20px 0;
+            }
+            
+            .auth-buttons {
+                margin-top: 10px;
+            }
+            
+            .hero h2 {
+                font-size: 28px;
+            }
+            
+            .hero p {
+                font-size: 16px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <div class="logo">
+                    <h1>تب<span>ادل</span></h1>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="#">الرئيسية</a></li>
+                    <li><a href="#">التصنيفات</a></li>
+                    <li><a href="#">كيف يعمل</a></li>
+                    <li><a href="#">اتصل بنا</a></li>
+                </ul>
+                <div class="auth-buttons">
+                    <a href="#" class="login-btn">تسجيل الدخول</a>
+                    <a href="#" class="register-btn">إنشاء حساب</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h2>أشياءك القديمة كنز لغيرك</h2>
+            <p>منصة تبادل تمكنك من بيع، شراء، تبادل أو إهداء الأشياء التي لم تعد تحتاجها في منزلك</p>
+            <div class="search-box">
+                <input type="text" placeholder="ابحث عن شيء تريده...">
+                <button><i class="fas fa-search"></i> بحث</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories">
+        <div class="container">
+            <div class="section-title">
+                <h2>التصنيفات</h2>
+            </div>
+            <div class="categories-grid">
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-couch"></i>
+                    </div>
+                    <h3>أثاث</h3>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <h3>مقتنيات قديمة</h3>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <h3>ألعاب أطفال</h3>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <h3>مواد غذائية</h3>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3>مواد بناء</h3>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>إلكترونيات</h3>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-tshirt"></i>
+                    </div>
+                    <h3>ملابس</h3>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3>كتب</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Items Section -->
+    <section class="featured-items">
+        <div class="container">
+            <div class="section-title">
+                <h2>أحدث الإضافات</h2>
+            </div>
+            <div class="items-grid">
+                <div class="item-card">
+                    <div class="item-image">
+                        <img src="https://via.placeholder.com/300x200" alt="عنصر معروض">
+                    </div>
+                    <div class="item-details">
+                        <h3>كنبة جلدية بحالة جيدة</h3>
+                        <div class="item-price">75,000 ل.س</div>
+                        <div class="item-location">دمشق، المزة</div>
+                        <span class="item-type sale">بيع</span>
+                    </div>
+                </div>
+                <div class="item-card">
+                    <div class="item-image">
+                        <img src="https://via.placeholder.com/300x200" alt="عنصر معروض">
+                    </div>
+                    <div class="item-details">
+                        <h3>مجموعة كتب أطفال</h3>
+                        <div class="item-price">مجاناً</div>
+                        <div class="item-location">حلب، الصاخور</div>
+                        <span class="item-type gift">هدية</span>
+                    </div>
+                </div>
+                <div class="item-card">
+                    <div class="item-image">
+                        <img src="https://via.placeholder.com/300x200" alt="عنصر معروض">
+                    </div>
+                    <div class="item-details">
+                        <h3>هاتف محمول نوكيا قديم</h3>
+                        <div class="item-price">مطلوب تبادل</div>
+                        <div class="item-location">اللاذقية، وسط المدينة</div>
+                        <span class="item-type exchange">تبادل</span>
+                    </div>
+                </div>
+                <div class="item-card">
+                    <div class="item-image">
+                        <img src="https://via.placeholder.com/300x200" alt="عنصر معروض">
+                    </div>
+                    <div class="item-details">
+                        <h3>طاولة طعام خشبية</h3>
+                        <div class="item-price">120,000 ل.س</div>
+                        <div class="item-location">حمص، بابا عمرو</div>
+                        <span class="item-type sale">بيع</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>عن تبادل</h3>
+                    <p>منصة سورية تهدف إلى إعادة استخدام الأشياء التي لم نعد نحتاجها من خلال البيع، التبادل أو الإهداء.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>روابط سريعة</h3>
+                    <ul>
+                        <li><a href="#">الرئيسية</a></li>
+                        <li><a href="#">كيف يعمل</a></li>
+                        <li><a href="#">الشروط والأحكام</a></li>
+                        <li><a href="#">سياسة الخصوصية</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>التصنيفات</h3>
+                    <ul>
+                        <li><a href="#">أثاث</a></li>
+                        <li><a href="#">مقتنيات قديمة</a></li>
+                        <li><a href="#">ألعاب أطفال</a></li>
+                        <li><a href="#">مواد غذائية</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>اتصل بنا</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> سوريا</li>
+                        <li><i class="fas fa-phone"></i> +963 XXX XXX XXX</li>
+                        <li><i class="fas fa-envelope"></i> info@tabadul.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>جميع الحقوق محفوظة &copy; تبادل 2023</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
